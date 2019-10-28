@@ -48,3 +48,7 @@ do
     crontab -u $cronuser -l >> .monitoring
 done
 echo "=====" >> .monitoring
+
+# OS info
+echo "=====" >> .monitoring
+lsb_release -a >> .monitoring
