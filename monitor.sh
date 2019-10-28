@@ -28,7 +28,7 @@ echo "=====" >> .monitoring
 names='python nginx docker postgres apache2'
 for name in $names
 do
-    echo $name $(ps aux | grep "$name" | grep -v "grep" ) >> .monitoring
+    echo $name $(ps aux |  grep "$name" | grep -v "grep" | awk '{print $2}') >> .monitoring
 done
 echo "=====" >> .monitoring
 
