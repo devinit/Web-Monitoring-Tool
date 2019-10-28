@@ -13,8 +13,7 @@ df  / >> .monitoring
 echo "===== MEMORY =====" >> .monitoring
 
 # Memory usage
-free >> .monitoring
-vmstat >> .monitoring
+vmstat -s >> .monitoring
 echo "===== CPU UPTIME=====" >> .monitoring
 
 # CPU uptime
