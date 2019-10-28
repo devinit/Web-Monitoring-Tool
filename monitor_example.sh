@@ -12,19 +12,28 @@ echo "=====" >> .monitoring
 free -h >> .monitoring
 echo "=====" >> .monitoring
 
+# CPU uptime
+uptime >> .monitoring
+echo "=====" >> .monitoring
+
 # CPU usage
 cat /proc/cpuinfo >> .monitoring
 echo "=====" >> .monitoring
 
 # Process alive
-names='python nginx kdkdkdkd'
+names='python nginx docker postgres apache2'
 for name in $names
 do
-    echo $name $(ps aux | grep "$name" ) >> .monitoring
+    echo $name $(ps aux | grep "$name" | grep -v "grep" ) >> .monitoring
 done
 echo "=====" >> .monitoring
 
+
 # Docker
+docker -v >> .monitoring
+echo "=====" >> .monitoring
+
+# Docker images
 docker image list --quiet --filter dangling=false >> .monitoring
 echo "=====" >> .monitoring
 
