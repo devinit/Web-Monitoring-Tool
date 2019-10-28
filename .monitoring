@@ -1,0 +1,106 @@
+Mon Oct 28 12:41:47 EAT 2019
+===== DISK SPACE =====
+Filesystem     1K-blocks      Used Available Use% Mounted on
+/dev/sda7      499518968 302719756 171402068  64% /
+===== MEMORY =====
+     16322496 K total memory
+      4584856 K used memory
+      7581732 K active memory
+      3601212 K inactive memory
+      4275160 K free memory
+      1582252 K buffer memory
+      5880228 K swap cache
+     16673788 K total swap
+          512 K used swap
+     16673276 K free swap
+      6909623 non-nice user cpu ticks
+        18283 nice user cpu ticks
+      2307418 system cpu ticks
+      9140200 idle cpu ticks
+       348887 IO-wait cpu ticks
+            0 IRQ cpu ticks
+        94056 softirq cpu ticks
+            0 stolen cpu ticks
+     22406805 pages paged in
+     63878998 pages paged out
+           13 pages swapped in
+           24 pages swapped out
+    256605236 interrupts
+    527376790 CPU context switches
+   1571639561 boot time
+       302388 forks
+===== CPU UPTIME=====
+ 12:41:47 up 7 days,  3:09,  1 user,  load average: 1.39, 0.82, 0.83
+===== CPU INFO =====
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+stepping	: 9
+microcode	: 0xb4
+cpu MHz		: 3158.668
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp md_clear flush_l1d
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs
+bogomips	: 5808.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz
+stepping	: 9
+microcode	: 0xb4
+cpu MHz		: 3207.371
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 22
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs
+bogomips	: 5808.00
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+===== PROCESSESS =====
+python 1238 1862 10224 30358
+nginx 2286 2291 2292
+docker 2723 3989
+postgres 2082 2435 2436 2438 2442 2445 2446 4035 4382 4383 4384 4385 4386 4392
+apache2 2429
+===== DOCKER =====
+Docker version 18.09.7, build 2d0083d
+===== DOCKER IMAGES =====
+47d49eb910f3
+184507f95b7b
+===== CRON SCHEDULE =====
+===== OS INFO =====
+Distributor ID:	Ubuntu
+Description:	Ubuntu 18.04.3 LTS
+Release:	18.04
+Codename:	bionic
+===== END =====
