@@ -51,4 +51,9 @@ echo "===== OS INFO =====" >> .monitoring
 
 # OS info
 lsb_release -a >> .monitoring
+
+# Hostname
+echo "===== HOSTNAME =====" >> .monitoring
+hostname >> .monitoring
+
 echo "===== END =====" >> .monitoring
