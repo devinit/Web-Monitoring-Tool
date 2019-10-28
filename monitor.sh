@@ -4,8 +4,12 @@ cd /tmp
 # Create monitoring log
 touch .monitoring
 
+# timestamp
+date > .monitoring
+echo "=====" >> .monitoring
+
 # Disk space
-df  / > .monitoring
+df  / >> .monitoring
 echo "=====" >> .monitoring
 
 # Memory usage
