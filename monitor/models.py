@@ -23,7 +23,7 @@ class Server(BaseEntity):
 class Domain(BaseEntity):
     title = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    url = models.UrlField(max_length=255)
+    url = models.URLField(max_length=255)
     server = models.ForeignKey('Server', on_delete=models.CASCADE)
 
 
