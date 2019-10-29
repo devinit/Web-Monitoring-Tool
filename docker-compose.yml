@@ -1,0 +1,38 @@
+version: "2.2"
+
+services:
+  db:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: webmonitor
+      POSTGRES_USER: webmonitor
+      POSTGRES_PASSWORD: webmonitor
+    restart: always
+    volumes:
+      - webmonitor:/var/lib/postgresql/data
+
+  web:
+    depends_on:
+      - db
+    expose:
+      - "8090"
+    env_file: .env
+    build:
+      context: .
+    volumes:
+      - ./:/code/
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+      - ./assets:/assets
+      - ./storage:/media
+    depends_on:
+      - web
+
+volumes:
+  webmonitor:
+    external: true
