@@ -17,4 +17,4 @@ RUN apt-get -y install cron
 WORKDIR /src
 RUN pip install -r requirements.txt
 
-CMD python manage.py migrate && service cron start && gunicorn -w 2 -k gevent -b 0.0.0.0:80 web_monitor.wsgi
+CMD python manage.py migrate && service cron start && gunicorn -w 2 -b 0.0.0.0:8090 web_monitor.wsgi

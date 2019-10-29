@@ -76,8 +76,10 @@ WSGI_APPLICATION = 'web_monitor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'web_monitor',
-        'USER': 'postgres',
+        'NAME': 'webmonitor',
+        'USER': 'webmonitor',
+        'PASSWORD': 'webmonitor',
+        'HOST': 'db'
     }
 }
 
