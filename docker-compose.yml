@@ -20,7 +20,7 @@ services:
     build:
       context: .
     volumes:
-      - ./:/code/
+      - ".:/src"
 
   nginx:
     image: nginx:latest
@@ -29,7 +29,7 @@ services:
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
       - ./static:/static
-      - ./storage:/media
+      - ./media:/media
     depends_on:
       - web
 
