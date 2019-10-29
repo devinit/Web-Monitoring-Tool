@@ -40,14 +40,3 @@ class Task(BaseEntity):
 class StatusUpdate(BaseEntity):
     status = models.ForeignKey('Status', on_delete=models.CASCADE)
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
-
-
-	
-ID: int (PK)
-Name: varchar
-Description: text
-CreatedAt: datetime
-ServerIP: FK (Server)
-DomainID: FK (Domain)
-StatusID: FK (StatusUpdate)
-ShowOnDashboard: bool
