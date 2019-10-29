@@ -16,7 +16,6 @@ services:
       - db
     expose:
       - "8090"
-    env_file: .env
     build:
       context: .
     volumes:
