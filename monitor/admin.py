@@ -17,7 +17,7 @@ class ServerAdmin(admin.ModelAdmin):
 
 
 class DomainAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description', 'url', 'server__ip']
+    list_display = ['title', 'description', 'url', 'server']
     save_on_top = True
 
 
@@ -27,12 +27,12 @@ class StatusAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['server__ip', 'name', 'description', 'status', 'show_on_dashboard']
+    list_display = ['server', 'name', 'description', 'status', 'show_on_dashboard']
     save_on_top = True
 
 
 class StatusUpdateAdmin(admin.ModelAdmin):
-    list_display = ['status__name', 'task__name']
+    list_display = ['status', 'task']
     save_on_top = True
 
 
@@ -42,12 +42,12 @@ class AlertAdmin(admin.ModelAdmin):
 
 
 class WatcherAdmin(admin.ModelAdmin):
-    list_display = ['description', 'task__name', 'watch_status__name', 'switch_status__name', 'duration', 'alert__name']
+    list_display = ['description', 'task', 'watch_status', 'switch_status', 'duration', 'alert']
     save_on_top = True
 
 
 class SettingsAdmin(admin.ModelAdmin):
-    list_display = ['task__name', 'key', 'value']
+    list_display = ['task', 'key', 'value']
     save_on_top = True
 
 
