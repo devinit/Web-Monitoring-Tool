@@ -1,5 +1,5 @@
 import re
-
+import json
 
 def parse_log(log_text):
     result = {}
@@ -56,3 +56,17 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+
+def json_in(a, b):
+    # A is json string,
+    # B is string to check if in
+    json_parse = json.loads(a)
+    return b in json_parse
+
+
+def json_len_gte(a, b):
+    # A is json string,
+    # B is gte value
+    json_parse = json.loads(a)
+    return len(a) >= b

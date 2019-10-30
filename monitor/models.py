@@ -4,6 +4,11 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from datetime import datetime
+import operator
+
+from .utils import json_len, json_in
+
 
 class BaseEntity(models.Model):
     """An abstract model which allows all other models to inherit its characteristics.
@@ -21,6 +26,72 @@ class Server(BaseEntity):
 
     def __str__(self):
         return self.ip
+
+    def records(self):
+        return Record.objects.filter(server=self).order_by('-created_on')
+
+    def available_methods(self):
+        return [
+            'timestamp_uptodate',
+            'free_memory'
+        ]
+
+    def available_operators(self):
+        return [
+            'lt',
+            'le',
+            'eq',
+            'ne',
+            'ge',
+            'gt',
+            'len',
+            'in',
+        ]
+
+    def get_operator(self, operator_name):
+        try:
+            return getattr(operator, operator_name)
+        except AttributeError:
+            if operator_name == "len":
+                return json_len
+            elif operator_name == "in":
+                return json_in
+        return None
+
+    def timestamp_uptodate(self, _,  _, expected_value):
+        timestamp = self.records().filter(key='time_stamp').first().value
+        then = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+        now = datetime.now()
+        if now - then > datetime.timedelta(minutes=int(expected_value)):
+            return False
+        return True
+
+    def free_memory_percent(self, _, operator_name, expected_value):
+        free_memory = float(self.records().filter(key='mem_free').first().value)
+        total_memory = float(self.records().filter(key='mem_total').first().value)
+        memory_percent = (free_memory/total_memory) * 100
+        op_func = self.get_operator(operator_name)
+        return op_func(memory_percent, float(expected_value))
+
+    def pid(self, method_arg, operator_name, expected_value):
+        pid_record = self.records().filter(key='{}_pid'.format(method_arg)).first().value
+        op_func = self.get_operator(operator_name)
+        if operator_name != "in":
+            try:
+                expected_value = float(expected_value)
+            except ValueError:
+                pass
+        return op_func(pid_record, expected_value)
+
+    def docker_id(self, _, operator_name, expected_value):
+        did_record = self.records().filter(key='docker_ids').first().value
+        op_func = self.get_operator(operator_name)
+        if operator_name != "in":
+            try:
+                expected_value = float(expected_value)
+            except ValueError:
+                pass
+        return op_func(did_record, expected_value)
 
 
 class Domain(BaseEntity):
