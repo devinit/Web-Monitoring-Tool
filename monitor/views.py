@@ -13,7 +13,7 @@ def receive_data(request):
         if text_data:
             json_data = parse_log(text_data)
 
-            for key, value in json_data:
+            for key, value in json_data.items():
                 new_set = Record(key=key, value=value)
                 new_set.save()
             return HttpResponse(json.dumps(json_data), status=202)
