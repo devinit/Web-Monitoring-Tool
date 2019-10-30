@@ -7,7 +7,8 @@ from monitor.models import (
     StatusUpdate,
     Alert,
     Watcher,
-    Settings
+    Settings,
+    Record
 )
 
 
@@ -51,6 +52,11 @@ class SettingsAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
+class RecordAdmin(admin.ModelAdmin):
+    list_display = ['key', 'value']
+    save_on_top = True
+
+
 admin.site.register(Server, ServerAdmin)
 admin.site.register(Domain, DomainAdmin)
 admin.site.register(Status, StatusAdmin)
@@ -59,3 +65,4 @@ admin.site.register(StatusUpdate, StatusUpdateAdmin)
 admin.site.register(Alert, AlertAdmin)
 admin.site.register(Watcher, WatcherAdmin)
 admin.site.register(Settings, SettingsAdmin)
+admin.site.register(Record, RecordAdmin)

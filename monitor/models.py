@@ -73,3 +73,8 @@ class Settings(models.Model):
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
     key = models.TextField(blank=True, null=True)
     value = models.TextField(blank=True, null=True)
+
+
+class Record(BaseEntity):
+    key = models.TextField(blank=True, null=True)
+    value = models.TextField(blank=True, null=True)
