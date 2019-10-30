@@ -55,8 +55,16 @@ class Alert(models.Model):
 class Watcher(models.Model):
     description = models.TextField(blank=True, null=True)
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
-    watch_status = models.ForeignKey('Status', on_delete=models.CASCADE)
-    switch_status = models.ForeignKey('Status', on_delete=models.CASCADE)
+    watch_status = models.ForeignKey(
+        'Status',
+        related_name='watch_status',
+        on_delete=models.CASCADE
+    )
+    switch_status = models.ForeignKey(
+        'Status',
+        related_name='switch_status',
+        on_delete=models.CASCADE
+    )
     duration = models.IntegerField(default=5)
     alert = models.ForeignKey('Alert', on_delete=models.CASCADE)
 
