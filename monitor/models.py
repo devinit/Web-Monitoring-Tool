@@ -34,9 +34,34 @@ class Status(models.Model):
 
 class Task(BaseEntity):
     server = models.ForeignKey('Server', on_delete=models.CASCADE)
-
+    name = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    status = models.ForeignKey('Status', on_delete=models.CASCADE)
+    show_on_dashboard = models.BooleanField(default=False)
 
 
 class StatusUpdate(BaseEntity):
     status = models.ForeignKey('Status', on_delete=models.CASCADE)
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
+
+
+class Alert(models.Model):
+    name = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    message = models.TextField(blank=True, null=True)
+    platform = models.TextField(blank=True, null=True)
+
+
+class Watcher(models.Model):
+    description = models.TextField(blank=True, null=True)
+    task = models.ForeignKey('Task', on_delete=models.CASCADE)
+    watch_status = models.ForeignKey('Status', on_delete=models.CASCADE)
+    switch_status = models.ForeignKey('Status', on_delete=models.CASCADE)
+    duration = models.IntegerField(default=5)
+    alert = models.ForeignKey('Alert', on_delete=models.CASCADE)
+
+
+class Settings(models.Model):
+    task = models.ForeignKey('Task', on_delete=models.CASCADE)
+    key = models.TextField(blank=True, null=True)
+    value = models.TextField(blank=True, null=True)
