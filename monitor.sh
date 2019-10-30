@@ -17,7 +17,7 @@ vmstat -s >> .monitoring
 echo "===== CPU UPTIME=====" >> .monitoring
 
 # CPU uptime
-uptime >> .monitoring
+uptime -s >> .monitoring
 echo "===== CPU INFO =====" >> .monitoring
 
 # CPU usage

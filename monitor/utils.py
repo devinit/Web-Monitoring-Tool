@@ -5,6 +5,8 @@ def parse_log(log_text):
     result = {}
     section_regex = re.compile("=====.*?=====")
     sections = section_regex.split(log_text)
+    # Timestamp
+    result["time_stamp"] = sections[0].strip()
     # Disk usage
     disk_sec = sections[1].split()
     result["disk_1kblocks"] = disk_sec[8]
@@ -21,13 +23,7 @@ def parse_log(log_text):
     result["mem_buffer"] = mem_sec[6][0]
     result["mem_swap"] = mem_sec[7][0]
     # Uptime
-    up_sec = sections[3].split()
-    result["up_days"] = up_sec[2]
-    result["up_hours"] = up_sec[4].replace(",", "")
-    result["up_users"] = up_sec[5]
-    result["up_load1"] = up_sec[9].replace(",", "")
-    result["up_load5"] = up_sec[10].replace(",", "")
-    result["up_load15"] = up_sec[11].replace(",", "")
+    result["up_date"] = sections[3].strip()
     # Processes
     proc_sec = sections[5].strip().split('\n')
     for program_line in proc_sec:
