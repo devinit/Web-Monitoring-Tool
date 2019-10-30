@@ -19,6 +19,9 @@ class Server(BaseEntity):
     description = models.TextField(blank=True, null=True)
     ip = models.GenericIPAddressField()
 
+    def __str__(self):
+        return self.ip
+
 
 class Domain(BaseEntity):
     title = models.TextField(blank=True, null=True)
@@ -26,10 +29,19 @@ class Domain(BaseEntity):
     url = models.URLField(max_length=255)
     server = models.ForeignKey('Server', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Status(models.Model):
     name = models.TextField(blank=True, null=True)
     colour = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "statuses"
 
 
 class Task(BaseEntity):
@@ -39,10 +51,16 @@ class Task(BaseEntity):
     status = models.ForeignKey('Status', on_delete=models.CASCADE)
     show_on_dashboard = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 class StatusUpdate(BaseEntity):
     status = models.ForeignKey('Status', on_delete=models.CASCADE)
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} -> {}".format(self.status, self.task)
 
 
 class Alert(models.Model):
@@ -50,6 +68,9 @@ class Alert(models.Model):
     description = models.TextField(blank=True, null=True)
     message = models.TextField(blank=True, null=True)
     platform = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Watcher(models.Model):
@@ -68,13 +89,26 @@ class Watcher(models.Model):
     duration = models.IntegerField(default=5)
     alert = models.ForeignKey('Alert', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return "{} watcher for {}".format(self.watch_status, self.task)
+
 
 class Settings(models.Model):
     task = models.ForeignKey('Task', on_delete=models.CASCADE)
     key = models.TextField(blank=True, null=True)
     value = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return "{}: {}".format(self.key, self.value)
+
+    class Meta:
+        verbose_name_plural = "settings"
+
 
 class Record(BaseEntity):
+    server = models.ForeignKey('Server', on_delete=models.CASCADE, blank=True, null=True)
     key = models.TextField(blank=True, null=True)
     value = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return "{} ({}: {})".format(self.server, self.key, self.value)

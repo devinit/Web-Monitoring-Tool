@@ -53,7 +53,7 @@ class SettingsAdmin(admin.ModelAdmin):
 
 
 class RecordAdmin(admin.ModelAdmin):
-    list_display = ['key', 'value']
+    list_display = ['server', 'key', 'value', 'created_on']
     save_on_top = True
 
 

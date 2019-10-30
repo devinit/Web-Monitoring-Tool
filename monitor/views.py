@@ -1,9 +1,10 @@
 import json
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from .utils import parse_log
-from .models import Record
+from .utils import parse_log, get_client_ip
+from .models import Server, Record
 
 
 @csrf_exempt
@@ -12,9 +13,10 @@ def receive_data(request):
         text_data = request.POST.get('data', None)
         if text_data:
             json_data = parse_log(text_data)
-
+            server_ip = get_client_ip(request)
+            server_obj = get_object_or_404(Server, ip=server_ip)
             for key, value in json_data.items():
-                new_set = Record(key=key, value=value)
-                new_set.save()
+                new_record = Record(key=key, value=value, server=server_obj)
+                new_record.save()
             return HttpResponse(json.dumps(json_data), status=202)
     return HttpResponse(status=405)
