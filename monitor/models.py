@@ -33,7 +33,10 @@ class Server(BaseEntity):
     def available_methods(self):
         return [
             'timestamp_uptodate',
-            'free_memory'
+            'free_memory_percent',
+            'pid',
+            'docker_id',
+            'generic'
         ]
 
     def available_operators(self):
@@ -92,6 +95,16 @@ class Server(BaseEntity):
             except ValueError:
                 pass
         return op_func(did_record, expected_value)
+
+    def generic(self, method_arg, operator_name, expected_value):
+        record = self.records().filter(key='{}'.format(method_arg)).first().value
+        op_func = self.get_operator(operator_name)
+        if operator_name != "in":
+            try:
+                expected_value = float(expected_value)
+            except ValueError:
+                pass
+        return op_func(record, expected_value)
 
 
 class Domain(BaseEntity):
