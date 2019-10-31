@@ -24,8 +24,8 @@ const Servers = () => {
   const renderServer = (server, index) => (
     <Card key={index}>
       <Card.Header>
-        <Accordion.Toggle as={Button} variant="link" eventKey={index}>
-          { `${server.ip} - ${server.description}` }
+        <Accordion.Toggle as={Card.Title} variant="link" eventKey={index}>
+          {`${server.ip} - ${server.description}`}
         </Accordion.Toggle>
       </Card.Header>
       <Accordion.Collapse eventKey={index}>
@@ -38,7 +38,7 @@ const Servers = () => {
 
   return (
     <Accordion defaultActiveKey="0" className="monitored-servers">
-      { servers.map(renderServer) }
+      {servers.map(renderServer)}
     </Accordion>
   );
 };
