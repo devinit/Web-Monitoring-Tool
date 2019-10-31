@@ -1,9 +1,10 @@
 *.pyc
 venv
 .env
-static
+/static/
 media
 __pycache__
 
 # JS
 node_modules/
+monitor/static/js/
