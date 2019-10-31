@@ -127,9 +127,11 @@ class Alert(models.Model):
         return self.name
 
 
-    def alert(self):
+    def alert(self, watcher, server):
         # placeholder
-        return self.message
+        message = "{} watcher failed for server {}.".format(watcher.description, server)
+        print(message)
+        return message
 
 
 class Watcher(models.Model):
@@ -168,7 +170,7 @@ class Watcher(models.Model):
             method_func = getattr(server, self.method)
             watch_result = method_func(self.method_arg, self.operator, self.expected_value)
             if not watch_result:
-                self.alert.alert(self)
+                self.alert.alert(self, server)
 
 
 class Record(BaseEntity):
