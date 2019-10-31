@@ -7,7 +7,7 @@ from django.db import models
 from datetime import datetime
 import operator
 
-from .utils import json_len, json_in
+from .utils import json_len_gte, json_in
 
 
 class BaseEntity(models.Model):
@@ -56,7 +56,7 @@ class Server(BaseEntity):
             return getattr(operator, operator_name)
         except AttributeError:
             if operator_name == "len":
-                return json_len
+                return json_len_gte
             elif operator_name == "in":
                 return json_in
         return None
