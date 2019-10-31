@@ -3,22 +3,26 @@ import { Accordion, Button, Card } from 'react-bootstrap';
 import { ServerDashboard } from '../ServerDashboard';
 
 const Servers = () => {
-  const servers = [
-    {
-      id: 1,
-      ip: '172.18.0.1',
-      description: "Alex's Laptop",
-      domains: [],
-    },
-    {
-      id: 2,
-      ip: '172.18.0.2',
-      description: "David's Laptop",
-      domains: [],
-    },
-  ];
+  const [servers, setServers] = React.useState([]);
+  React.useEffect(() => {
+    // TODO: fetch servers here
+    setServers([
+      {
+        id: 1,
+        ip: '172.18.0.1',
+        description: "Alex's Laptop",
+        domains: [],
+      },
+      {
+        id: 2,
+        ip: '172.18.0.2',
+        description: "David's Laptop",
+        domains: [],
+      },
+    ]);
+  }, []);
   const renderServer = (server, index) => (
-    <Card>
+    <Card key={index}>
       <Card.Header>
         <Accordion.Toggle as={Button} variant="link" eventKey={index}>
           { `${server.ip} - ${server.description}` }
@@ -33,7 +37,7 @@ const Servers = () => {
   );
 
   return (
-    <Accordion defaultActiveKey="0">
+    <Accordion defaultActiveKey="0" className="monitored-servers">
       { servers.map(renderServer) }
     </Accordion>
   );
