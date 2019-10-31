@@ -1,38 +1,38 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
-  mode: "development",
-  entry: ["@babel/polyfill", "./monitor/src/index.js"],
+  mode: 'development',
+  entry: ['@babel/polyfill', './monitor/src/index.jsx'],
   output: {
-    path: path.resolve(__dirname, "monitor/static/monitor/"),
-    filename: "js/bundle.js",
-    chunkFilename: "js/[name].bundle.js",
-    publicPath: "/static/monitor/"
+    path: path.resolve(__dirname, 'monitor/static/monitor/'),
+    filename: 'js/bundle.js',
+    chunkFilename: 'js/[name].bundle.js',
+    publicPath: '/static/monitor/',
   },
   resolve: {
-    extensions: [".js"]
+    extensions: ['.js'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: "babel-loader"
+        use: 'babel-loader',
       },
       {
         test: /\.(c|sc)ss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
-      }
-    ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+    ],
   },
-  devtool: "eval-source-map",
+  devtool: 'eval-source-map',
   watch: true,
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "css/bundle.css"
+      filename: 'css/bundle.css',
     }),
     // new LiveReloadPlugin()
-  ]
+  ],
 };
