@@ -70,11 +70,11 @@ class Server(BaseEntity):
 
     def query_timestamp_uptodate(self, _):
         timestamp = self.records().filter(key='time_stamp').first().value
-        return datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+        return datetime.strptime(timestamp, "%a %b %d %H:%M:%S %Z %Y")
 
     def timestamp_uptodate(self, _method_arg,  _operator_name, expected_value):
         timestamp = self.records().filter(key='time_stamp').first().value
-        then = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+        then = datetime.strptime(timestamp, "%a %b %d %H:%M:%S %Z %Y")
         now = datetime.now()
         if now - then > datetime.timedelta(minutes=int(expected_value)):
             return False
