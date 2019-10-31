@@ -1,29 +1,42 @@
 import React from 'react';
 import { Accordion, Button, Card } from 'react-bootstrap';
+import { ServerDashboard } from '../ServerDashboard';
 
-const Servers = () => (
-  <Accordion defaultActiveKey="0">
+const Servers = () => {
+  const servers = [
+    {
+      id: 1,
+      ip: '172.18.0.1',
+      description: "Alex's Laptop",
+      domains: [],
+    },
+    {
+      id: 2,
+      ip: '172.18.0.2',
+      description: "David's Laptop",
+      domains: [],
+    },
+  ];
+  const renderServer = (server, index) => (
     <Card>
       <Card.Header>
-        <Accordion.Toggle as={Button} variant="link" eventKey="0">
-            Server 101
+        <Accordion.Toggle as={Button} variant="link" eventKey={index}>
+          { `${server.ip} - ${server.description}` }
         </Accordion.Toggle>
       </Card.Header>
-      <Accordion.Collapse eventKey="0">
-        <Card.Body>Hello! I am the body</Card.Body>
+      <Accordion.Collapse eventKey={index}>
+        <Card.Body>
+          <ServerDashboard data={server} />
+        </Card.Body>
       </Accordion.Collapse>
     </Card>
-    <Card>
-      <Card.Header>
-        <Accordion.Toggle as={Button} variant="link" eventKey="1">
-            Server 102
-        </Accordion.Toggle>
-      </Card.Header>
-      <Accordion.Collapse eventKey="1">
-        <Card.Body>Hello! I am another body</Card.Body>
-      </Accordion.Collapse>
-    </Card>
-  </Accordion>
-);
+  );
+
+  return (
+    <Accordion defaultActiveKey="0">
+      { servers.map(renderServer) }
+    </Accordion>
+  );
+};
 
 export { Servers as default, Servers };
