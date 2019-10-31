@@ -96,7 +96,7 @@ class Server(BaseEntity):
 
     def query_pid(self, method_arg):
         pid_record = self.records().filter(key='{}_pid'.format(method_arg)).first().value
-        return json.loads(pid_record)
+        return json.loads(pid_record.replace("'", '"'))
 
     def pid(self, method_arg, operator_name, expected_value):
         pid_record = self.records().filter(key='{}_pid'.format(method_arg)).first().value
@@ -110,7 +110,7 @@ class Server(BaseEntity):
 
     def query_docker_id(self, _):
         did_record = self.records().filter(key='docker_ids').first().value
-        return json.loads(did_record)
+        return json.loads(did_record.replace("'", '"'))
 
     def docker_id(self, _, operator_name, expected_value):
         did_record = self.records().filter(key='docker_ids').first().value
