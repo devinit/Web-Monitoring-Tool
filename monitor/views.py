@@ -22,5 +22,5 @@ def receive_data(request):
     return HttpResponse(status=405)
 
 
-def index(request):
-    return render_to_response('monitor/index.html', {})
+def dashboard(request):
+    return render_to_response('monitor/dashboard.html', {})

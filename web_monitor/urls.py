@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from monitor.views import receive_data, index
+from monitor.views import receive_data, dashboard
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('receive/', receive_data),
-    path('', index)
+    path('', dashboard)
 ]
