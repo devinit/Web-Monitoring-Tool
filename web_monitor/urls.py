@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from monitor.views import receive_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('receive/', receive_data),
 ]

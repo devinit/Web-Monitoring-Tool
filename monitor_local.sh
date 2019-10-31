@@ -58,4 +58,4 @@ hostname >> .monitoring
 
 echo "===== END =====" >> .monitoring
 
-curl --data-urlencode data@.monitoring -X POST http://178.62.41.43/receive/
+curl --data-urlencode data@.monitoring -X POST http://localhost/receive/
