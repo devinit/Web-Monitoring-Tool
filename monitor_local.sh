@@ -5,7 +5,7 @@ cd /tmp
 touch .monitoring
 
 # timestamp
-date > .monitoring
+date +"%Y-%m-%d %H:%M:%S %z" > .monitoring
 echo "===== DISK SPACE =====" >> .monitoring
 
 # Disk space
