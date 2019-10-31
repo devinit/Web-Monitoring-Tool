@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from monitor.views import receive_data, dashboard
+from monitor.views import receive_data, dashboard, servers, records, query
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('receive/', receive_data),
-    path('', dashboard)
+    path('', dashboard),
+    path('servers', servers),
+    path('records', records),
+    path('query', query)
 ]
