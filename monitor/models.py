@@ -117,36 +117,6 @@ class Domain(BaseEntity):
         return self.title
 
 
-class Status(models.Model):
-    name = models.TextField(blank=True, null=True)
-    colour = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "statuses"
-
-
-class Task(BaseEntity):
-    server = models.ForeignKey('Server', on_delete=models.CASCADE)
-    name = models.TextField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    status = models.ForeignKey('Status', on_delete=models.CASCADE)
-    show_on_dashboard = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.name
-
-
-class StatusUpdate(BaseEntity):
-    status = models.ForeignKey('Status', on_delete=models.CASCADE)
-    task = models.ForeignKey('Task', on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "{} -> {}".format(self.status, self.task)
-
-
 class Alert(models.Model):
     name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -158,27 +128,42 @@ class Alert(models.Model):
 
 
 class Watcher(models.Model):
+    AVAILABLE_METHODS = [
+        ('timestamp_uptodate', 'Server responding'),
+        ('free_memory_percent', 'Free memory percent'),
+        ('pid', 'Process ID'),
+        ('docker_id', 'Docker ID'),
+        ('generic', 'Generic')
+    ]
+    AVAILABLE_OPERATORS = [
+        ('lt', 'Less than'),
+        ('le', 'Less Than or Equal To'),
+        ('eq', 'Equal To'),
+        ('ne', 'Not Equal'),
+        ('ge', 'Greater Than or Equal'),
+        ('gt', 'Greater Than'),
+        ('len', 'Length'),
+        ('in', 'String In'),
+    ]
     description = models.TextField(blank=True, null=True)
-    task = models.ForeignKey('Task', on_delete=models.CASCADE)
-    method = models.TextField(blank=True, null=True)
-    operator = models.TextField(blank=True, null=True)
+    method = models.CharField(blank=True, null=True, max_length=255, choices=AVAILABLE_METHODS)
+    operator = models.CharField(blank=True, null=True, max_length=3, choices=AVAILABLE_OPERATORS)
     expected_value = models.TextField(blank=True, null=True)
+    method_arg = models.TextField(blank=True, null=True)
     alert = models.ForeignKey('Alert', on_delete=models.CASCADE)
+    servers = models.ManyToManyField(Server)
 
     def __str__(self):
-        return "{} watcher for {}".format(self.method, self.task)
+        return "{} watcher".format(self.method)
 
 
-class Settings(models.Model):
-    task = models.ForeignKey('Task', on_delete=models.CASCADE)
-    key = models.TextField(blank=True, null=True)
-    value = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return "{}: {}".format(self.key, self.value)
-
-    class Meta:
-        verbose_name_plural = "settings"
+    def watch(self):
+        servers = self.servers.all()
+        for server in servers:
+            method_func = getattr(server, self.method)
+            watch_result = method_func(self.method_arg, self.operator, self.expected_value)
+            if not watch_result:
+                self.alert.alert(self)
 
 
 class Record(BaseEntity):
