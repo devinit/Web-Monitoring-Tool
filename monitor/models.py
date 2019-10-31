@@ -61,7 +61,7 @@ class Server(BaseEntity):
                 return json_in
         return None
 
-    def timestamp_uptodate(self, _,  _, expected_value):
+    def timestamp_uptodate(self, _method_arg,  _operator_name, expected_value):
         timestamp = self.records().filter(key='time_stamp').first().value
         then = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
         now = datetime.now()
