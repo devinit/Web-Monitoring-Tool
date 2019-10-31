@@ -127,6 +127,11 @@ class Alert(models.Model):
         return self.name
 
 
+    def alert(self):
+        # placeholder
+        return self.message
+
+
 class Watcher(models.Model):
     AVAILABLE_METHODS = [
         ('timestamp_uptodate', 'Server responding'),
@@ -154,7 +159,7 @@ class Watcher(models.Model):
     servers = models.ManyToManyField(Server)
 
     def __str__(self):
-        return "{} watcher".format(self.method)
+        return self.description
 
 
     def watch(self):
