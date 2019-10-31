@@ -1,6 +1,7 @@
 import json
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render_to_response
 
 from .utils import parse_log, get_client_ip
 from .models import Server, Record
@@ -19,3 +20,7 @@ def receive_data(request):
                 new_record.save()
             return HttpResponse(json.dumps(json_data), status=202)
     return HttpResponse(status=405)
+
+
+def index(request):
+    return render_to_response('monitor/index.html', {})

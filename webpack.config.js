@@ -6,7 +6,7 @@ module.exports = {
   mode: "development",
   entry: ["@babel/polyfill", "./monitor/src/index.js"],
   output: {
-    path: path.resolve(__dirname, "monitor/static/js/"),
+    path: path.resolve(__dirname, "monitor/static/monitor/"),
     filename: "js/bundle.js",
     chunkFilename: "js/[name].bundle.js",
     publicPath: "/static/monitor/"
