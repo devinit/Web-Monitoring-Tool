@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('receive/', receive_data),
     path('', dashboard),
-    path('servers', servers),
-    path('records', records),
-    path('query', query)
+    path('servers/', servers),
+    path('records/', records),
+    path('query/', query)
 ]
