@@ -19,7 +19,7 @@ class DomainAdmin(admin.ModelAdmin):
 
 
 class AlertAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'message', 'platform']
+    list_display = ['name', 'description', 'message', 'platform', 'group']
     save_on_top = True
 
 
