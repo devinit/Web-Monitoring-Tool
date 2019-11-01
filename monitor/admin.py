@@ -24,7 +24,7 @@ class AlertAdmin(admin.ModelAdmin):
 
 
 class WatcherAdmin(admin.ModelAdmin):
-    list_display = ['description', 'method', 'expected_value', 'operator', 'alert']
+    list_display = ['description', 'method', 'expected_value', 'operator', 'alert', 'trigger']
     save_on_top = True
 
 

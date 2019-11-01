@@ -172,7 +172,6 @@ class Alert(models.Model):
     def alert(self, watcher, server):
         # placeholder
         subject = "{} watcher failed for server {}.".format(watcher.description, server)
-        print(subject)
         if self.platform == 'ml':
             self.send_emails(subject, self.message)
         return
@@ -203,6 +202,7 @@ class Watcher(models.Model):
     method_arg = models.TextField(blank=True, null=True)
     alert = models.ForeignKey('Alert', on_delete=models.CASCADE)
     servers = models.ManyToManyField(Server)
+    trigger = models.BooleanField(default=False)
 
     def __str__(self):
         return self.description
@@ -213,8 +213,13 @@ class Watcher(models.Model):
         for server in servers:
             method_func = getattr(server, self.method)
             watch_result = method_func(self.method_arg, self.operator, self.expected_value)
-            if not watch_result:
+            if not watch_result and not self.trigger:
                 self.alert.alert(self, server)
+                self.trigger = True
+                self.save()
+            elif self.trigger and self.watch_result:
+                self.trigger = False
+                self.save()
 
 
 class Record(BaseEntity):
