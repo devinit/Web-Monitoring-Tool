@@ -1,25 +1,23 @@
 import React from 'react';
-import { Accordion, Button, Card } from 'react-bootstrap';
+import { Accordion, Card, Alert } from 'react-bootstrap';
 import { ServerDashboard } from '../ServerDashboard';
 
 const Servers = () => {
   const [servers, setServers] = React.useState([]);
+  const [alertMessage, setAlertMessage] = React.useState('');
   React.useEffect(() => {
-    // TODO: fetch servers here
-    setServers([
-      {
-        id: 1,
-        ip: '172.18.0.1',
-        description: "Alex's Laptop",
-        domains: [],
-      },
-      {
-        id: 2,
-        ip: '172.18.0.2',
-        description: "David's Laptop",
-        domains: [],
-      },
-    ]);
+    try {
+      window.fetch('/servers/')
+        .then((response) => response.json())
+        .then((results) => {
+          if (results) {
+            setServers(results);
+          }
+        })
+        .catch((error) => setAlertMessage(error.message));
+    } catch (error) {
+      setAlertMessage(error.message);
+    }
   }, []);
   const renderServer = (server, index) => (
     <Card key={index}>
@@ -37,9 +35,12 @@ const Servers = () => {
   );
 
   return (
-    <Accordion defaultActiveKey="0" className="monitored-servers">
-      {servers.map(renderServer)}
-    </Accordion>
+    <>
+      <Alert variant="danger" show={!!alertMessage}>{ alertMessage }</Alert>
+      <Accordion defaultActiveKey="0" className="monitored-servers">
+        {servers.map(renderServer)}
+      </Accordion>
+    </>
   );
 };
 
