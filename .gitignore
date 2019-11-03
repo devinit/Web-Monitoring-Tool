@@ -7,4 +7,4 @@ __pycache__
 
 # JS
 node_modules/
-monitor/static/js/
+monitor/static/monitor/js/

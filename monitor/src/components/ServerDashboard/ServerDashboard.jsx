@@ -1,24 +1,29 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Table, Alert } from 'react-bootstrap';
 
-const ServerDashboard = ({ data }) => { // eslint-disable-line react/prop-types
-  console.log(data);
-  const [records, setRecords] = React.useState([]);
+export const ServerDashboard = ({ data, setAlertMessage }) => { // eslint-disable-line react/prop-types,max-len
+  const [records, setRecords] = useState([]);
+
   React.useEffect(() => {
-    // TODO: fetch records here
-    setRecords([
-      {
-        key: 'mem_free',
-        value: '6615460',
-        created_on: '2019-10-30T10:24:24.781Z',
-      },
-      {
-        key: 'cpu',
-        value: '80',
-        created_on: '2019-10-31T10:24:24.781Z',
-      },
-    ]);
-  }, []);
+    try {
+      window.fetch(`/records?server=${data.id}`)// eslint-disable-line react/prop-types
+        .then((response) => response.json())
+        .then((results) => {
+          if (results) {
+            setRecords(results);
+          }
+        })
+        .catch((error) => {
+          if (setAlertMessage) {
+            setAlertMessage(error.message);
+          }
+        });
+    } catch (error) {
+      if (setAlertMessage) {
+        setAlertMessage(error.message);
+      }
+    }
+  }, []); // eslint-disable-line
 
   const renderRecord = (record, index) => (
     <tr key={index}>
@@ -28,13 +33,17 @@ const ServerDashboard = ({ data }) => { // eslint-disable-line react/prop-types
     </tr>
   );
 
-  return (
-    <Table>
-      <tbody>
-        { records.map(renderRecord) }
-      </tbody>
-    </Table>
-  );
+  if (records.length) {
+    return (
+      <Table>
+        <tbody>
+          { records.map(renderRecord) }
+        </tbody>
+      </Table>
+    );
+  }
+
+  return <Alert variant="info">No Records Found</Alert>;
 };
 
-export { ServerDashboard as default, ServerDashboard };
+export default ServerDashboard;

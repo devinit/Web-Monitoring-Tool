@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Alert } from 'react-bootstrap';
 import { ServerDashboard } from '../ServerDashboard';
 
 const Servers = () => {
-  const [servers, setServers] = React.useState([]);
-  const [alertMessage, setAlertMessage] = React.useState('');
-  React.useEffect(() => {
+  const [servers, setServers] = useState([]);
+  const [alertMessage, setAlertMessage] = useState('');
+  useEffect(() => {
     try {
       window.fetch('/servers/')
         .then((response) => response.json())
@@ -28,7 +28,7 @@ const Servers = () => {
       </Card.Header>
       <Accordion.Collapse eventKey={index}>
         <Card.Body>
-          <ServerDashboard data={server} />
+          <ServerDashboard data={server} setAlertMessage={setAlertMessage} />
         </Card.Body>
       </Accordion.Collapse>
     </Card>
