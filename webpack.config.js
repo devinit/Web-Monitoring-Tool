@@ -4,12 +4,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: ['@babel/polyfill', './monitor/src/index.jsx'],
+  entry: {
+    monitor: ['@babel/polyfill', './monitor/src/index.jsx'],
+  },
   output: {
-    path: path.resolve(__dirname, 'monitor/static/monitor/'),
-    filename: 'js/bundle.js',
-    chunkFilename: 'js/[name].bundle.js',
-    publicPath: '/static/monitor/',
+    path: path.resolve(__dirname, ''),
+    filename: '[name]/static/[name]/js/bundle.js',
+    chunkFilename: '[name]/static/[name]/js/[name].bundle.js',
   },
   resolve: {
     extensions: ['.js'],
@@ -22,8 +23,12 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.(c|sc)ss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'sass-loader'],
       },
     ],
   },
@@ -31,7 +36,7 @@ module.exports = {
   watch: true,
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/bundle.css',
+      filename: '[name]/static/[name]/css/bundle.css',
     }),
     // new LiveReloadPlugin()
   ],
