@@ -2,7 +2,7 @@
     Database Models
 """
 import json
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
 from datetime import datetime

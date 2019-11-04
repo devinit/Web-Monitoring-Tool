@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['178.62.41.43', 'localhost']
 
 INSTALLED_APPS = [
     'monitor',
+    'account',
 
     'django.contrib.admin',
     'django.contrib.auth',
