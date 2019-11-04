@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from monitor.views import receive_data, dashboard, servers, records, query
+from account.views import UserLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +24,6 @@ urlpatterns = [
     path('', dashboard),
     path('servers/', servers),
     path('records/', records),
-    path('query/', query)
+    path('query/', query),
+    path('login/', UserLoginView.as_view())
 ]
