@@ -32,7 +32,7 @@ module.exports = {
       },
     ],
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   watch: true,
   plugins: [
     new MiniCssExtractPlugin({
