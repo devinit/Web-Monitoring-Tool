@@ -12,12 +12,13 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
   {% load static %}
   <link rel="stylesheet" href="{% static 'monitor/assets/css/material-dashboard.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'monitor/css/bundle.css' %}" />
 </head>
 <body>
   <div class="off-canvas-sidebar">
     <div class="wrapper wrapper-full-page">
-      <div class="page-header login-page header-filter">
-        {% block body %}{% endblock body %}
+      <div class="page-header login-page header-filter" style="background-image: url('{% static 'monitor/assets/images/pattern-banner-1.jpg' %}'); background-size: cover; background-position: top center;">
+        {% include 'account/partials/forms/login_form.html' %}
       </div>
     </div>
   </div>
@@ -27,5 +28,13 @@
   <script src="{% static 'monitor/assets/js/core/popper.min.js' %}"></script>
   <script src="{% static 'monitor/assets/js/core/bootstrap-material-design.min.js' %}"></script>
   <script src="{% static 'monitor/assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      setTimeout(function() {
+        // after 700 ms we add the class animated to the login/register card
+        $('.card').removeClass('card-hidden');
+      }, 700);
+    });
+  </script>
 </body>
 </html>
