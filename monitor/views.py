@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.auth.decorators import login_required
 
 from .utils import parse_log, get_client_ip
 from .models import Server, Record, Domain
@@ -23,6 +24,7 @@ def receive_data(request):
     return HttpResponse(status=405)
 
 
+@login_required
 def dashboard(request):
     return render_to_response('monitor/dashboard.html', {})
 
