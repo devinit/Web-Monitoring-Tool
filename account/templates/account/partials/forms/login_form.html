@@ -2,8 +2,7 @@
   <div class="row">
     <div class="col-lg-5 col-md-6 col-sm-8 ml-auto mr-auto">
       {% url 'login' as action_url %}
-      <form class="form" method="get" action="{{ action_url }}">
-        {{ form.non_field_errors }}
+      <form class="form" method="post" action="{{ action_url }}">
         {% csrf_token %}
         <div class="card card-login card-hidden">
           <div class="card-header card-header-danger text-center">
@@ -11,6 +10,11 @@
           </div>
           <div class="card-body">
             <p class="card-description text-center">LOGIN</p>
+            <div class="alert alert-danger offset-md-1{% if form.non_field_errors|length == 0 %} d-none{% endif %}">
+              {% for error in form.non_field_errors %}
+                <div>{{error}}</div>
+              {% endfor %}
+            </div>
             <span class="form-group bmd-form-group">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -18,8 +22,7 @@
                     <i class="material-icons">face</i>
                   </span>
                 </div>
-                <input type="text" class="form-control" placeholder="Username..." name="{{form.username.name}}" required/>
-                {{form.username.errors}}
+                <input type="text" class="form-control" placeholder="Username..." name="{{form.username.name}}" required autocomplete="username"/>
               </div>
             </span>
             <span class="form-group bmd-form-group">
@@ -29,8 +32,7 @@
                     <i class="material-icons">lock_outline</i>
                   </span>
                 </div>
-                <input type="password" class="form-control" placeholder="Password..." name="{{form.password.name}}" required/>
-                {{form.password.errors}}
+                <input type="password" class="form-control" placeholder="Password..." name="{{form.password.name}}" required autocomplete="current-password"/>
               </div>
             </span>
           </div>

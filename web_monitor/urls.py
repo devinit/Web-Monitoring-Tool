@@ -16,12 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from monitor.views import receive_data, dashboard, servers, records, query
-from account.views import UserLoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('receive/', receive_data),
-    path('', dashboard),
+    path('', dashboard, name='dashboard'),
     path('servers/', servers),
     path('records/', records),
     path('query/', query),

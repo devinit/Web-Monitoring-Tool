@@ -1,24 +1,38 @@
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.views.decorators.http import require_http_methods
+from django.shortcuts import redirect, render
+from django.contrib.auth import login
 
 from account.forms import UserLoginForm
 from account.usecases import UserLogin, UserLoginFailedError
 
-class UserLoginView(FormView):
-    template_name = 'account/login.html'
-    form_class = UserLoginForm
-    success_url = reverse_lazy('')
 
-    def form_valid(self, form):
-        self._run_use_case(form)
-        return super().form_valid(form)
+@require_http_methods(["GET", "POST"])
+def user_login_view(request):
 
-    def _run_use_case(self, form):
-        login = UserLogin(
-            username=form.cleaned_data['username'],
-            password=form.cleaned_data['password'])
+    if request.method == 'POST':
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        loginForm = UserLoginForm(data={
+            'username': username,
+            'password': password
+        })
+        if loginForm.is_valid():
+            loginUseCase = UserLogin(
+                username=loginForm.cleaned_data['username'],
+                password=loginForm.cleaned_data['password'])
+            try:
+                user = loginUseCase.execute()
+                if user is not None:
+                    login(request, user)
+                    return redirect('dashboard')
+                else:
+                    raise UserLoginFailedError('Invalid username and password')
+            except UserLoginFailedError as err:
+                loginForm.add_error(None, str(err))
 
-        try:
-            login.execute()
-        except UserLoginFailedError as err:
-            form.add_error(None, str(err))
+        return render(request, template_name='account/login.html', context={ 'form': loginForm })
+
+
+    return render(request, template_name='account/login.html')

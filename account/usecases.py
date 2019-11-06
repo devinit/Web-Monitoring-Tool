@@ -12,7 +12,7 @@ class UserLogin:
         self._password = password
 
     def execute(self):
-        self._authenticate()
+        return self._authenticate()
 
     def _authenticate(self):
         user = authenticate(username=self._username, password=self._password)
