@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Alert } from 'react-bootstrap';
 import { ServerDashboard } from '../ServerDashboard';
+import { ServerQueryForm } from '../ServerQueryForm';
 
 const Servers = () => {
   const [servers, setServers] = useState([]);
@@ -28,6 +29,7 @@ const Servers = () => {
       </Card.Header>
       <Accordion.Collapse eventKey={index}>
         <Card.Body>
+          <ServerQueryForm serverID={server.id} setAlertMessage={setAlertMessage} />
           <ServerDashboard data={server} setAlertMessage={setAlertMessage} />
         </Card.Body>
       </Accordion.Collapse>
