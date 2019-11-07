@@ -38,7 +38,9 @@ const Servers = () => {
 
   return (
     <>
-      <Alert variant="danger" show={!!alertMessage}>{ alertMessage }</Alert>
+      <Alert variant="danger" show={!!alertMessage} dismissible onClose={() => setAlertMessage('')}>
+        { alertMessage }
+      </Alert>
       <Accordion defaultActiveKey="0" className="monitored-servers">
         {servers.map(renderServer)}
       </Accordion>
