@@ -9,3 +9,6 @@ __pycache__
 node_modules/
 monitor/static/monitor/js/
 monitor/static/monitor/css/
+
+web_monitor/.vscode/
+web_monitor/Pipfile
