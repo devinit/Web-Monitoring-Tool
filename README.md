@@ -18,9 +18,9 @@ These are the main metrics the monitor will want to check
 - Does it respond with HTML for a GET request?
 - What is the server’s uptime?
 - What is the server’s response time?
-- What classes as downtime?: 
+- What classes as downtime?:
 - does the web app respond with 200/300 status codes?
-- is-ready for databases? 
+- is-ready for databases?
 - are the cron jobs running?
 - is SSH and SSL enabled?
 - Save into database downtime stats
@@ -57,7 +57,7 @@ This section defines the basic requirements for the public page
 
 ###### NOTIFICATIONS
 This section defines the basic requirements for the notification app
-- Twitter (Spotify’s example): 
+- Twitter (Spotify’s example):
 - Should create a Twitter account per monitoring “namespace” (DI/IATI)
 - Should automatically notify (once) when
 - A service goes offline
@@ -71,3 +71,6 @@ This section defines the basic requirements for the notification app
 
 ###### FUTURE DEVELOPMENTS
 - Make it generic and share it as a Django package
+
+###### NICE TO HAVE
+- Brainstorm a name for this tool - Web Monitoring Tool seems too generic
