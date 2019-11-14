@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table'
-import { Accordion, Card, Alert } from 'react-bootstrap';
-import { ServerDashboard } from '../ServerDashboard';
-import { ServerQueryForm } from '../ServerQueryForm';
 
 const UserList = () => {
-  const [servers, setServers] = useState([]);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
     try {
       window.fetch('/users_list')
         .then((response) => response.json())
         .then((results) => {
           if (results) {
-            setServers(results);
+            setUsers(results);
           }
         })
         .catch((error) => setAlertMessage(error.message));
@@ -21,12 +18,13 @@ const UserList = () => {
       setAlertMessage(error.message);
     }
   }, []);
-  const renderServer = (server, index) => (
+
+  const renderUser = (user, index) => (
     <tr key={index}>
       <td>{index + 1}</td>
-      <td>{server.username}</td>
-      <td>{server.date_joined}</td>
-      <td>{server.is_superuser ? "Yes" : "No"}</td>
+      <td>{user.username}</td>
+      <td>{user.date_joined}</td>
+      <td>{user.is_superuser ? "Yes" : "No"}</td>
     </tr>
   );
 
@@ -44,7 +42,7 @@ const UserList = () => {
           </tr>
         </thead>
         <tbody>
-          {servers.map(renderServer)}
+          {users.map(renderUser)}
         </tbody>
       </Table>
       </div>
