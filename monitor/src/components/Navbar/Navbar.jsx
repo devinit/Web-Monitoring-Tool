@@ -23,7 +23,7 @@ const Navbar = () => {
                 <p className="d-lg-none d-md-block">Account</p>
               </a>
               <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                <a className="dropdown-item" href="/settings">Settings</a>
+                <a className="dropdown-item" href="/users">Users</a>
                 <a className="dropdown-item" href="/logout">Log Out</a>
               </div>
             </li>
