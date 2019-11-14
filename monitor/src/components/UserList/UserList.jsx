@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Moment from 'react-moment';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -23,8 +26,15 @@ const UserList = () => {
     <tr key={index}>
       <td>{index + 1}</td>
       <td>{user.username}</td>
-      <td>{user.date_joined}</td>
+      <td><Moment format="ddd Do MMMM, YYYY">{user.date_joined}</Moment></td>
       <td>{user.is_superuser ? "Yes" : "No"}</td>
+      <td>
+          <ButtonGroup aria-label="Basic example">
+            <Button variant="info">View</Button>
+            <Button variant="success">Edit</Button>
+            <Button variant="danger">Delete</Button>
+          </ButtonGroup>
+      </td>
     </tr>
   );
 
@@ -39,6 +49,7 @@ const UserList = () => {
             <th>Username</th>
             <th>Date Joined</th>
             <th>Is Admin</th>
+            <th>Manage</th>
           </tr>
         </thead>
         <tbody>
