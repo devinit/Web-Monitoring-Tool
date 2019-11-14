@@ -26,7 +26,7 @@ export default function App () {
                 <Route exact path="/">
                   <Servers />
                 </Route>
-                <Route exact path="/settings">
+                <Route exact path="/users">
                   <UserList />
                 </Route>
               </Switch>

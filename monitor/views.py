@@ -4,6 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.forms.models import model_to_dict
+from django.contrib.auth.models import User
 
 from .utils import parse_log, get_client_ip
 from .models import Server, Record, Domain
@@ -29,7 +32,7 @@ def dashboard(request):
     return render_to_response('monitor/index.html', {})
 
 @login_required
-def settings(request):
+def users(request):
     return render_to_response('monitor/index.html', {})
 
 @csrf_exempt
@@ -48,6 +51,13 @@ def servers(request):
         result.append(serv_obj)
     return HttpResponse(json.dumps(result), content_type='application/json')
 
+@csrf_exempt
+def users_list(request):
+    col = ["email", "first_name", "id", "is_superuser", "last_name", "username", "date_joined"]
+
+    all_users = User.objects.all().values(*col)
+    user_list = list(all_users)
+    return JsonResponse(user_list, safe=False)
 
 @csrf_exempt
 def records(request):
