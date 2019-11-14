@@ -26,8 +26,11 @@ def receive_data(request):
 
 @login_required
 def dashboard(request):
-    return render_to_response('monitor/dashboard.html', {})
+    return render_to_response('monitor/index.html', {})
 
+@login_required
+def settings(request):
+    return render_to_response('monitor/index.html', {})
 
 @csrf_exempt
 def servers(request):

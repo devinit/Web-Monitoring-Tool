@@ -23,3 +23,7 @@ select:-webkit-autofill:focus {
 .monitored-servers .card .card-title {
   cursor: pointer;
 }
+
+.main-panel {
+  width: 100%;
+}

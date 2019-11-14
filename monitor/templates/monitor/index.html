@@ -15,14 +15,8 @@
   <link rel="stylesheet" href="{% static 'monitor/css/bundle.css' %}" />
 </head>
 <body>
-  <div class="wrapper ">
-    <div class="main-panel" style="width: 100%;">
-      {% include 'monitor/partials/navbar.html' %}
-      <div class="content">
-        {% block body %}{% endblock body %}
-      </div>
-    </div>
-  </div>
+
+<div id="app" class="app"><!-- React --></div>
 
   {% load static %}
   <script src="{% static 'monitor/assets/js/core/jquery.min.js' %}"></script>
