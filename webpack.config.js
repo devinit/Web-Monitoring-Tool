@@ -13,7 +13,7 @@ module.exports = {
     chunkFilename: '[name]/static/[name]/js/[name].bundle.js',
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
