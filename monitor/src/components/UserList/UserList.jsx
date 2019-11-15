@@ -3,9 +3,14 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import Moment from 'react-moment';
+import { Popup } from '../Popup'
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [show, setShow] = useState();
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     try {
@@ -30,7 +35,7 @@ const UserList = () => {
       <td>{user.is_superuser ? "Yes" : "No"}</td>
       <td>
           <ButtonGroup aria-label="Basic example">
-            <Button variant="info">View</Button>
+            <Button variant="info" onClick={handleShow}>View</Button>
             <Button variant="success">Edit</Button>
             <Button variant="danger">Delete</Button>
           </ButtonGroup>
@@ -56,6 +61,7 @@ const UserList = () => {
           {users.map(renderUser)}
         </tbody>
       </Table>
+      <Popup popUpState={show} closePopup={handleClose}/>
       </div>
     </>
   );
