@@ -7,10 +7,14 @@ import { Popup } from '../Popup'
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState({});
   const [show, setShow] = useState();
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (user) => {
+    setSelectedUser(user);
+    setShow(true);
+  };
 
   useEffect(() => {
     try {
@@ -21,9 +25,9 @@ const UserList = () => {
             setUsers(results);
           }
         })
-        .catch((error) => setAlertMessage(error.message));
+        .catch((error) => console.log(error.message));
     } catch (error) {
-      setAlertMessage(error.message);
+
     }
   }, []);
 
@@ -35,7 +39,7 @@ const UserList = () => {
       <td>{user.is_superuser ? "Yes" : "No"}</td>
       <td>
           <ButtonGroup aria-label="Basic example">
-            <Button variant="info" onClick={handleShow}>View</Button>
+            <Button variant="info" onClick={() => handleShow(user)}>View</Button>
             <Button variant="success">Edit</Button>
             <Button variant="danger">Delete</Button>
           </ButtonGroup>
@@ -61,7 +65,7 @@ const UserList = () => {
           {users.map(renderUser)}
         </tbody>
       </Table>
-      <Popup popUpState={show} closePopup={handleClose}/>
+      <Popup userObject={selectedUser} popUpState={show} closePopup={handleClose}/>
       </div>
     </>
   );
