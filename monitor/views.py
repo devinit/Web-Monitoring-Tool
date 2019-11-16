@@ -53,7 +53,7 @@ def servers(request):
 
 @csrf_exempt
 def users_list(request):
-    col = ["email", "first_name", "id", "is_superuser", "last_name", "username", "date_joined"]
+    col = ["email", "first_name", "id", "is_superuser", "last_name", "username", "date_joined", "is_active", "last_login"]
 
     all_users = User.objects.all().values(*col)
     user_list = list(all_users)
