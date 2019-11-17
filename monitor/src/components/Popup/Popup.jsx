@@ -10,7 +10,7 @@ const Popup = ({userObject, popUpState, closePopup}) => {
     <>
       <Modal show={popUpState} onHide={closePopup}>
         <Modal.Header closeButton>
-        <Modal.Title>User Details for {userObject.username}</Modal.Title>
+        <Modal.Title>Profile for {userObject.username}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <ViewUser user={userObject} />
