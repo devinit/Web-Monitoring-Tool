@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from monitor.views import receive_data, dashboard, servers, records, query, users, users_list
+from account.views import users_update
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +24,7 @@ urlpatterns = [
     path('', dashboard, name='dashboard'),
     path('users',  users, name='users'),
     path('users_list',  users_list, name='users_list'),
+    path('users_update',  users_update, name='users_update'),
     path('servers/', servers),
     path('records/', records),
     path('query/', query),

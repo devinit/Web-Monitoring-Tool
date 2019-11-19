@@ -1,8 +1,13 @@
+import json
+from django.http import JsonResponse
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 
 from account.forms import UserLoginForm
 from account.usecases import UserLogin, UserLoginFailedError
@@ -45,3 +50,20 @@ def user_logout_view(request):
     logout(request)
 
     return redirect('login')
+
+@csrf_exempt
+def users_update(request):
+    if request.method == "POST":
+        #return HttpResponse(json.dumps(request.POST), status=202)
+        try:
+            user_id = int(request.POST.get('userid', None))
+            username = request.POST.get('username', None)
+            user = User.objects.get(id=user_id)
+            if username:
+                user.username = username
+                user.save()
+                return JsonResponse({"newusername": user.username})
+        except  User.DoesNotExist:
+            return JsonResponse({"Error": "User doesnot exist"})
+
+    return HttpResponse(status=405)

@@ -4,17 +4,58 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Moment from 'react-moment';
+import Editable from 'react-bootstrap-editable'
+import qs from 'qs'
+import axios from 'axios'
 
 
 const ViewUser = ({user}) => {
+
+  const editUsername = (username) => {
+    const requestBody = {
+      'username': username,
+      'userid': user.id
+    }
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+
+    axios.post('http://localhost:8090/users_update', qs.stringify(requestBody), config)
+    .then((result) => {
+      console.log("success"+JSON.stringify(data)); // JSON-string from `response.json()` call
+    })
+    .catch((err) => {
+      // Do somthing
+    });
+  };
+
   return (
     <Form>
       <Form.Group as={Row} controlId="formPlaintextEmail">
         <Form.Label column sm="2">
           Username
         </Form.Label>
-        <Col sm="10">
-          <Form.Control plaintext readOnly defaultValue={user.username} />
+        <Col sm="10" style={{ margin: '7px 0 0' }}>
+          <Editable
+            alwaysEditing={false}
+            disabled={false}
+            editText="Edit"
+            initialValue={user.username}
+            isValueClickable={false}
+            mode="inline"
+            onSubmit={editUsername}
+            placement="top"
+            showText
+            type="textfield"
+            validate={(value) => {
+              if(value.length <= 0){
+                  return "Username is required"
+              }
+            }}
+          />
         </Col>
       </Form.Group>
 
