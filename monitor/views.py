@@ -1,7 +1,7 @@
 import json
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.decorators import login_required
 
@@ -26,7 +26,7 @@ def receive_data(request):
 
 @login_required
 def dashboard(request):
-    return render_to_response('monitor/dashboard.html', {})
+    return render(request, 'monitor/dashboard.html', {})
 
 
 @csrf_exempt
