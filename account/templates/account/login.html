@@ -1,0 +1,40 @@
+{% comment %} {% load render_bundle from webpack_loader %} {% endcomment %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>Web Monitoring Tool - Login</title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'monitor/assets/css/material-dashboard.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'monitor/css/bundle.css' %}" />
+</head>
+<body>
+  <div class="off-canvas-sidebar">
+    <div class="wrapper wrapper-full-page">
+      <div class="page-header login-page header-filter" style="background-image: url('{% static 'monitor/assets/images/pattern-banner-1.jpg' %}'); background-size: cover; background-position: top center;">
+        {% include 'account/partials/forms/login_form.html' %}
+      </div>
+    </div>
+  </div>
+
+  {% load static %}
+  <script src="{% static 'monitor/assets/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'monitor/assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'monitor/assets/js/core/bootstrap-material-design.min.js' %}"></script>
+  <script src="{% static 'monitor/assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      setTimeout(function() {
+        // after 700 ms we add the class animated to the login/register card
+        $('.card').removeClass('card-hidden');
+      }, 700);
+    });
+  </script>
+</body>
+</html>

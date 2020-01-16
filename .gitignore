@@ -1,6 +1,14 @@
 *.pyc
 venv
 .env
-static
+/static/
 media
 __pycache__
+
+# JS
+node_modules/
+monitor/static/monitor/js/
+monitor/static/monitor/css/
+
+web_monitor/.vscode/
+web_monitor/Pipfile

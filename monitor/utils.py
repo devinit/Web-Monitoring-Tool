@@ -61,12 +61,12 @@ def get_client_ip(request):
 def json_in(a, b):
     # A is json string,
     # B is string to check if in
-    json_parse = json.loads(a)
+    json_parse = json.loads(a.replace("'", '"'))
     return b in json_parse
 
 
 def json_len_gte(a, b):
     # A is json string,
     # B is gte value
-    json_parse = json.loads(a)
+    json_parse = json.loads(a.replace("'", '"'))
     return len(a) >= b

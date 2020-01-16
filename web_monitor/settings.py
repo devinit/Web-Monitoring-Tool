@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['178.62.41.43', 'localhost']
 
 INSTALLED_APPS = [
     'monitor',
+    'account',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,3 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# AUTH
+LOGIN_URL = '/account/login/'

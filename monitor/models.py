@@ -1,7 +1,8 @@
 """
     Database Models
 """
-from django.contrib.auth.models import User
+import json
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
 from datetime import datetime
@@ -30,26 +31,32 @@ class Server(BaseEntity):
     def records(self):
         return Record.objects.filter(server=self).order_by('-created_on')
 
-    def available_methods(self):
-        return [
-            'timestamp_uptodate',
-            'free_memory_percent',
-            'pid',
-            'docker_id',
-            'generic'
-        ]
+    available_queries = [
+        'query_timestamp_uptodate',
+        'query_free_memory_percent',
+        'query_pid',
+        'query_docker_id',
+        'query_generic'
+    ]
 
-    def available_operators(self):
-        return [
-            'lt',
-            'le',
-            'eq',
-            'ne',
-            'ge',
-            'gt',
-            'len',
-            'in',
-        ]
+    available_methods = [
+        'timestamp_uptodate',
+        'free_memory_percent',
+        'pid',
+        'docker_id',
+        'generic'
+    ]
+
+    available_operators = [
+        'lt',
+        'le',
+        'eq',
+        'ne',
+        'ge',
+        'gt',
+        'len',
+        'in',
+    ]
 
     def get_operator(self, operator_name):
         try:
@@ -61,13 +68,23 @@ class Server(BaseEntity):
                 return json_in
         return None
 
+    def query_timestamp_uptodate(self, _):
+        timestamp = self.records().filter(key='time_stamp').first().value
+        return datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S %z")
+
     def timestamp_uptodate(self, _method_arg,  _operator_name, expected_value):
         timestamp = self.records().filter(key='time_stamp').first().value
-        then = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+        then = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S %z")
         now = datetime.now()
         if now - then > datetime.timedelta(minutes=int(expected_value)):
             return False
         return True
+
+    def query_free_memory_percent(self, _):
+        free_memory = float(self.records().filter(key='mem_free').first().value)
+        total_memory = float(self.records().filter(key='mem_total').first().value)
+        memory_percent = (free_memory/total_memory) * 100
+        return memory_percent
 
     def free_memory_percent(self, _, operator_name, expected_value):
         free_memory = float(self.records().filter(key='mem_free').first().value)
@@ -75,6 +92,11 @@ class Server(BaseEntity):
         memory_percent = (free_memory/total_memory) * 100
         op_func = self.get_operator(operator_name)
         return op_func(memory_percent, float(expected_value))
+
+
+    def query_pid(self, method_arg):
+        pid_record = self.records().filter(key='{}_pid'.format(method_arg)).first().value
+        return json.loads(pid_record.replace("'", '"'))
 
     def pid(self, method_arg, operator_name, expected_value):
         pid_record = self.records().filter(key='{}_pid'.format(method_arg)).first().value
@@ -86,6 +108,10 @@ class Server(BaseEntity):
                 pass
         return op_func(pid_record, expected_value)
 
+    def query_docker_id(self, _):
+        did_record = self.records().filter(key='docker_ids').first().value
+        return json.loads(did_record.replace("'", '"'))
+
     def docker_id(self, _, operator_name, expected_value):
         did_record = self.records().filter(key='docker_ids').first().value
         op_func = self.get_operator(operator_name)
@@ -95,6 +121,10 @@ class Server(BaseEntity):
             except ValueError:
                 pass
         return op_func(did_record, expected_value)
+
+    def query_generic(self, method_arg):
+        record = self.records().filter(key='{}'.format(method_arg)).first().value
+        return record
 
     def generic(self, method_arg, operator_name, expected_value):
         record = self.records().filter(key='{}'.format(method_arg)).first().value
