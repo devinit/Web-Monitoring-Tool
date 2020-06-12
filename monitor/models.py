@@ -213,11 +213,11 @@ class Watcher(models.Model):
         for server in servers:
             method_func = getattr(server, self.method)
             watch_result = method_func(self.method_arg, self.operator, self.expected_value)
-            if not watch_result and not self.trigger:
+            if not watch_result and self.trigger:
                 self.alert.alert(self, server)
                 self.trigger = True
                 self.save()
-            elif self.trigger and self.watch_result:
+            elif self.trigger and watch_result:
                 self.trigger = False
                 self.save()
 

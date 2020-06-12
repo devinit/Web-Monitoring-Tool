@@ -25,7 +25,7 @@ SECRET_KEY = 'm6rq08wnosqib&+k8h13posx#=+ukx**-aj)5r^ty#ilc+m=!9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['178.62.41.43', 'localhost']
+ALLOWED_HOSTS = ['178.62.41.43', 'localhost', '0.0.0.0']
 
 
 # Application definition
@@ -132,5 +132,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'devinitautomailer@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = 'debukali@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'xulplmxouehardzh')
