@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Alert } from 'react-bootstrap';
 
-export const humanize = (str) => {
-  const frags = str.split('_');
-  for (let i = 0; i < frags.length; i += 1) {
-    frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
-  }
-  return frags.join(' ');
-};
+export const humanize = (str) => str.split('_').join(' ');
 
 export const ServerDashboard = ({ data, setAlertMessage }) => { // eslint-disable-line react/prop-types,max-len
   const [records, setRecords] = useState([]);
@@ -35,7 +29,7 @@ export const ServerDashboard = ({ data, setAlertMessage }) => { // eslint-disabl
 
   const renderRecord = (record, index) => (
     <tr key={index}>
-      <td>{ humanize(record.key) }</td>
+      <td className="text-capitalize">{ humanize(record.key) }</td>
       <td>{ record.value }</td>
       <td>{ new Date(record.created_on).toDateString() }</td>
     </tr>
