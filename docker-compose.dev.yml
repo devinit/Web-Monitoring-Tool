@@ -1,0 +1,29 @@
+version: "2.2"
+
+services:
+  db:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: webmonitor
+      POSTGRES_USER: webmonitor
+      POSTGRES_PASSWORD: webmonitor
+    restart: always
+    volumes:
+      - webmonitor:/var/lib/postgresql/data
+
+  web:
+    depends_on:
+      - db
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    build:
+      context: .
+    volumes:
+      - ".:/src"
+    command: bash -c "python manage.py runserver 0.0.0.0:80"
+
+volumes:
+  webmonitor:
+    external: true
