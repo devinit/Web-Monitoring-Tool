@@ -19,12 +19,12 @@ class DomainAdmin(admin.ModelAdmin):
 
 
 class AlertAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'message', 'platform']
+    list_display = ['name', 'description', 'message', 'platform', 'group']
     save_on_top = True
 
 
 class WatcherAdmin(admin.ModelAdmin):
-    list_display = ['description', 'method', 'expected_value', 'operator', 'alert']
+    list_display = ['description', 'method', 'expected_value', 'operator', 'alert', 'trigger']
     save_on_top = True
 
 

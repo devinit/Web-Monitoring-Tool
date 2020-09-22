@@ -2,8 +2,10 @@
     Database Models
 """
 import json
-from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.models import User, Group
 from django.db import models
+from django.conf import settings
+from django.core.mail import send_mass_mail
 
 from datetime import datetime
 import operator
@@ -148,20 +150,31 @@ class Domain(BaseEntity):
 
 
 class Alert(models.Model):
+    AVAILABLE_PLATFORMS = [
+        ('ml', 'email')
+    ]
     name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     message = models.TextField(blank=True, null=True)
-    platform = models.TextField(blank=True, null=True)
+    platform = models.CharField(blank=True, null=True, max_length=255, choices=AVAILABLE_PLATFORMS)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
 
 
+    def send_emails(self, subject, message):
+        recipient_list = [user.email for user in self.group.user_set.all() if user.email is not None]
+        message1 = (subject, message, settings.EMAIL_HOST_USER, recipient_list)
+        send_mass_mail((message1, ), fail_silently=False)
+
+
     def alert(self, watcher, server):
         # placeholder
-        message = "{} watcher failed for server {}.".format(watcher.description, server)
-        print(message)
-        return message
+        subject = "{} watcher failed for server {}.".format(watcher.description, server)
+        if self.platform == 'ml':
+            self.send_emails(subject, self.message)
+        return
 
 
 class Watcher(models.Model):
@@ -189,6 +202,7 @@ class Watcher(models.Model):
     method_arg = models.TextField(blank=True, null=True)
     alert = models.ForeignKey('Alert', on_delete=models.CASCADE)
     servers = models.ManyToManyField(Server)
+    trigger = models.BooleanField(default=False)
 
     def __str__(self):
         return self.description
@@ -199,8 +213,13 @@ class Watcher(models.Model):
         for server in servers:
             method_func = getattr(server, self.method)
             watch_result = method_func(self.method_arg, self.operator, self.expected_value)
-            if not watch_result:
+            if not watch_result and self.trigger:
                 self.alert.alert(self, server)
+                self.trigger = True
+                self.save()
+            elif self.trigger and watch_result:
+                self.trigger = False
+                self.save()
 
 
 class Record(BaseEntity):
